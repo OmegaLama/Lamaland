@@ -1,4 +1,4 @@
-#!/usr/local/bin/python2.7
+#!/usr/bin/python
 
 import dpkt
 
@@ -26,7 +26,7 @@ unkwcounter=0
 
 
 
-filename='monfichier.pcap'
+filename='test.pcap'
 
 for ts, pkt in dpkt.pcap.Reader(open(filename,'r')):
 
