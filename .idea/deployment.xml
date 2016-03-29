@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="VM Dev">
+  <component name="PublishConfigData" serverName="VM Dev" uploadOnCheckin="f4c5173a-b93b-4577-99b0-13786b867d21">
     <serverData>
       <paths name="VM Dev">
         <serverdata>
@@ -10,5 +10,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="VM Dev" />
   </component>
 </project>
