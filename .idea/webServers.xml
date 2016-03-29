@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f4c5173a-b93b-4577-99b0-13786b867d21" name="VM Dev" url="http://10.0.0.10">
+        <fileTransfer host="10.0.0.10" port="22" rootFolder="/home/mjusteau/Lamaland/Python" accessType="SFTP" password="dfd3dfdfdfd3dfcb" username="mjusteau">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
