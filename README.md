@@ -1,2 +1,4 @@
 # Lamaland
-Mon fourre tout
+Bienvenue dans ma batcave de programmeur.
+
+Ici c'est mon fourre tout.
