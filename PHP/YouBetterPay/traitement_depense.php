@@ -1,8 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lama
- * Date: 30/03/2016
- * Time: 11:02
- */
+require "config.php";
+
+$req = $connexion->prepare('INSERT INTO depense (nom, prix) VALUES(?, ?)');
+$req->execute(array($_POST['intitule'], $_POST['montant']));
+
+header('Location: index.php');
 ?>
