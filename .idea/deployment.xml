@@ -5,7 +5,7 @@
       <paths name="VM Dev">
         <serverdata>
           <mappings>
-            <mapping deploy="/PHP/YouBetterPay" local="$PROJECT_DIR$/PHP/YouBetterPay" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
