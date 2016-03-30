@@ -45,7 +45,7 @@
         </ul>
         <h2>Depense</h2>
         <fieldset>
-            <legend>Ajouter une depense</legend>
+            <legend>Ajouter une depenses</legend>
             <form action="traitement_depense.php" method="post">
                 <p>
                     <label for="intitule">Intitule</label> : <input type="text" name="intitule" id="intitule" /><br />
@@ -54,6 +54,31 @@
                 </p>
             </form>
         </fieldset>
+
+        <h3>Liste depense</h3>
+        <?php
+        require "config.php";
+
+        $resultats=$connexion->query("SELECT * FROM depense");
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+
+
+
+        while( $ligne = $resultats->fetch() ) {
+            echo "$ligne->nom";?>
+            <ul>
+                <li>Montant: <?php echo "$ligne->prix €";?></li>
+                <?php
+                $requete='SELECT participant.prenom, participant.nom, participant.pseudo FROM depense, participant WHERE depense.id_acheteur = participant.id AND depense.id=?';
+                $recupererPayeur=$connexion->prepare($requete);
+                $recupererPayeur->execute();
+                ?>
+                <li>Proprietaire: <?php echo "$recupererPayeur->prenom $recupererPayeur->nom $recupererPayeur->pseudo"?></li>
+            </ul>
+            <?php
+        }
+        $resultats->closeCursor();
+        ?>
         </ul>
     </body>
 </html>
