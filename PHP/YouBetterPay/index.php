@@ -71,6 +71,8 @@
                 <?php
                 $requete='SELECT participant.prenom, participant.nom, participant.pseudo FROM depense, participant WHERE depense.id_acheteur = participant.id AND depense.id=?';
                 $recupererPayeur=$connexion->prepare($requete);
+
+                $recupererPayeur->bind_param($ligne->id);
                 $recupererPayeur->execute();
                 ?>
                 <li>Proprietaire: <?php echo "$recupererPayeur->prenom $recupererPayeur->nom $recupererPayeur->pseudo"?></li>
