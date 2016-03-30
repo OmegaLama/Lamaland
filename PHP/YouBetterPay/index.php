@@ -43,5 +43,14 @@
             $resultats->closeCursor();
             ?>
         </ul>
+        <h2>Depense</h2>
+        <form action="traitement_depense.php" method="post">
+        <p>
+            <label for="intitule">Intitule</label> : <input type="text" name="intitule" id="intitule" /><br />
+            <label for="montant">Montant</label> :  <input type="number" name="montant" id="montant" /><br />
+            <input type="submit" value="Envoyer" />
+        </p>
+        </form>
+        </ul>
     </body>
 </html>
