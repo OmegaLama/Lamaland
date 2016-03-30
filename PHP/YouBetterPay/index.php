@@ -59,23 +59,19 @@
         <?php
         require "config.php";
 
-        $resultats=$connexion->query("SELECT * FROM depense");
+        $resultats=$connexion->query("SELECT id,nom,prix FROM depense");
         $resultats->setFetchMode(PDO::FETCH_OBJ);
-
-
 
         while( $ligne = $resultats->fetch() ) {
             echo "$ligne->nom";?>
             <ul>
                 <li>Montant: <?php echo "$ligne->prix €";?></li>
-                <?php
-                $requete='SELECT participant.prenom, participant.nom, participant.pseudo FROM depense, participant WHERE depense.id_acheteur = participant.id AND depense.id=?';
-                $recupererPayeur=$connexion->prepare($requete);
-
-                $recupererPayeur->bindParam(1, $ligne->id);
-                $recupererPayeur->execute();
-                ?>
-                <li>Proprietaire: <?php echo "$recupererPayeur->prenom $recupererPayeur->nom $recupererPayeur->pseudo"?></li>
+                <li>Acheteur: <?php
+                    $requete_prepare_1=$connexion->prepare("SELECT participant.prenom , participant.nom, participant.pseudo FROM depense, participant WHERE depense.id_acheteur = participant.id AND depense.id= :id"); // on prépare notre requête
+                    $requete_prepare_1->execute(array( 'id' => $ligne->id ));
+                    $retour=$requete_prepare_1->fetch(PDO::FETCH_OBJ);
+                    echo "$retour->prenom  $retour->nom $retour->pseudo <br />";
+                    ?></li>
             </ul>
             <?php
         }
