@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="VM Dev" uploadOnCheckin="f4c5173a-b93b-4577-99b0-13786b867d21">
+  <component name="PublishConfigData" serverName="VM Dev" uploadOnCheckin="24872f51-2bca-4d3e-aadd-504b42dc038c">
     <serverData>
       <paths name="VM Dev">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/PHP/YouBetterPay" local="$PROJECT_DIR$/PHP/YouBetterPay" web="/" />
           </mappings>
         </serverdata>
       </paths>
