@@ -49,11 +49,9 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
                 $ok = mysqli_stmt_bind_result($stmt, $utilisateur_prenom, $utilisateur_nom, $utilisateur_pseudo);
 
                 while (mysqli_stmt_fetch($stmt)) {
-                    ?>
-                    <li><?php echo $utilisateur_prenom, ' ', $utilisateur_nom, ', ', $utilisateur_pseudo; ?></li>
-                    <?php
-                }
                 ?>
+                    <li><?php echo $utilisateur_prenom, ' ', $utilisateur_nom, ', ', $utilisateur_pseudo; ?></li>
+                <?php } ?>
             </ul>
         </ul>
     </ul>
