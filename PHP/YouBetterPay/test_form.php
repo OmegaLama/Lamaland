@@ -6,30 +6,38 @@
     <title>Ajout Dépense - You Better Pay</title>
 </head>
 <body>
-<form action="test_traitement.php" method="post">
+<form action="fonctions.php" method="POST">
     <div>
-        Nom de la dépense :
-        <input type="text" name="nom" value=""
-               size="20" maxlength="250" />
-        <br />Personnes participant à la dépense :
-<?php
-// Connexion et selection de la base
-$connexion = mysqli_connect('localhost','lama','lama','db_test');
-$requete_utilisateur = 'SELECT u.utilisateur_id \'ID\',  u.utilisateur_prenom \'Prenom\', u.utilisateur_nom \'Nom\', u.utilisateur_pseudo \'Pseudo\' 
-FROM y_utilisateurs u';
-$utilisateurs = mysqli_query($connexion,$requete_utilisateur);
+        Nom de la dépense : <input type="text" name="saisie_nouvelle_depense[nom_depense]" size="20" maxlength="250" />
+        <br />Acheteur :
+            <?php
+            // Connexion et selection de la base
+            $connexion = mysqli_connect('localhost','lama','lama','db_test');
+            $requete_utilisateur = 'SELECT u.utilisateur_id \'ID\',  u.utilisateur_prenom \'Prenom\', u.utilisateur_nom \'Nom\', u.utilisateur_pseudo \'Pseudo\' 
+            FROM y_utilisateurs u';
+            $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
 
-while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
-    ?>
-    <input type="checkbox" name="saisie_depense[id]" value="<?php echo $utilisateur['ID'];?>"/><?php echo $utilisateur['Prenom'], ' ', $utilisateur['Nom'];
-}
-        ?>
-        <br />Date de la dépense <input type="date" name="saisie_depense[date]">
+            while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
+                echo '<br /><input type="checkbox" name="saisie_depense[id]" value="',$utilisateur['ID'], '"/> ',$utilisateur['Prenom'], ' ', $utilisateur['Nom'];
+            }
+            ?>
+
+        <br />Participant :
+            <?php
+            $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
+
+            while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
+                echo '<br /><input type="checkbox" name="saisie_depense[id]" value="',$utilisateur['ID'],'"/>', $utilisateur['Prenom'], ' ', $utilisateur['Nom'];
+            }
+            ?>
+        <br />Date de la dépense : <input type="date" name="saisie_depense[date]">
+
         <br />Commentaire :<br />
         <textarea name="saisie_depense[commentaire]" rows="4" cols="50"></textarea>
-        <br />
-        <input type="submit" name="soumettre" value="OK" />
 
+        <br />
+
+        <input type="submit" name="soumettre" value="OK" />
         <input type="reset" name="effacer" value="Effacer" />
     </div>
 </form>
