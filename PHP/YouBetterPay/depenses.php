@@ -13,7 +13,6 @@
 <?php
 // Connexion et selection de la base
 $connexion = mysqli_connect('localhost','lama','lama','db_test');
-$ok = mysqli_select_db($connexion,'diane') ;
 // Execution de la requete de selection.
 $requete_depenses = 'SELECT d.depense_id \'Depense ID\', d.depense_nom \'Nom Depense\', d.depense_description \'Description\', d.depense_prix \'Prix\', d.depense_date \'Date Depense\', u.utilisateur_nom , u.utilisateur_prenom, u.utilisateur_pseudo 
 FROM y_depenses d 
@@ -70,5 +69,9 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
 }
 $ok = mysqli_close($connexion);
 ?>
+
+<form action="test_form.php">
+    <input type="submit" value="Ajouter une depense">
+</form>
 </body>
 </html>
