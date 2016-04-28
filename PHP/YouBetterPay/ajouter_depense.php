@@ -31,6 +31,7 @@
             while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
                 echo '<br /><input type="checkbox" name="id_utilisateur_particpant_depense[]" value="',$utilisateur['ID'],'"/>', $utilisateur['Prenom'], ' ', $utilisateur['Nom'];
             }
+            
             ?>
         <br />Date de la dépense : <input type="date" name="date_depense">
         <br />Montant de la dépense: <input type="number" name="montant_depense">

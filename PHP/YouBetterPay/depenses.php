@@ -59,7 +59,8 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
                         else {
                             echo $utilisateur_prenom, ' ', $utilisateur_nom;
                         }
-                        ?></li>
+                        ?>
+                    </li>
                     <ul>
                         <?php echo 'Part de l\'utilisateur: ',$utilisateur_part,' €';?>
                     </ul>

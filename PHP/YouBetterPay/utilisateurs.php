@@ -20,11 +20,19 @@
 
                 while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
                     if ($utilisateur['pseudo']) {
-                        echo '<li>', $utilisateur['id'], ' - ', $utilisateur['prenom'], ' ', $utilisateur['nom'], ',  ', $utilisateur['pseudo'],'</li>';
+                        echo '<li>', $utilisateur['id'], ' - ', $utilisateur['prenom'], ' ', $utilisateur['nom'], ',  ', $utilisateur['pseudo'];
                     }
                     else {
-                        echo '<li>', $utilisateur['id'], ' - ', $utilisateur['prenom'], ' ', $utilisateur['nom'], '</li>';
+                        echo '<li>', $utilisateur['id'], ' - ', $utilisateur['prenom'], ' ', $utilisateur['nom'];
                     }
+
+                ?>
+                    <form action="supprimer_utilisateur.php" method="POST">
+                        <input type="hidden" name="id_suppression_utilisateur" value="<?php echo $utilisateur['id']?>"/>
+                        <input type="image" name="image" src="supprimer.png" height="15" width="15"/>
+                    </form>
+                    </li>
+                <?php
                 }
                 // Déconnexion.
                 $ok = mysqli_close($connexion);
