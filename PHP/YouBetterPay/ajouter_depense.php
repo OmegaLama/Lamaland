@@ -1,52 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Ajout Dépense - You Better Pay</title>
-</head>
-<body>
-<?php include_once('menu.php'); ?>
-<h2>Ajouter Depense</h2>
-<form action="fonctions.php" method="POST">
-    <div>
-        Nom de la dépense : <input type="text" name="nom_depense" size="20" maxlength="250" />
-        <br />Acheteur :
-            <?php
-            // Connexion et selection de la base
-            $connexion = mysqli_connect('localhost','lama','lama','db_test');
-            $requete_utilisateur = 'SELECT u.utilisateur_id \'ID\',  u.utilisateur_prenom \'Prenom\', u.utilisateur_nom \'Nom\', u.utilisateur_pseudo \'Pseudo\' 
-            FROM y_utilisateurs u';
-            $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
+<?php
+$connexion = mysqli_connect('localhost','lama','lama','db_test');
+print_r($_POST);
+echo '<br />';
+echo '<br />';
+echo '<br /> Nom depense: ', $_POST['nom_depense'];
+echo '<br /> ID acheteur: ', $_POST['id_utilisateur_acheteur_depense'];
+echo '<br /> ID participant: ', $_POST['id_utilisateur_particpant_depense'][0];
+foreach ($_POST['id_utilisateur_particpant_depense'] as $id_utilisateur) {
+    echo '<br />(boucle) ID participant: ', $id_utilisateur;
+}
+echo '<br /> Date depense: ', $_POST['date_depense'];
+echo '<br /> Commentaire depense: ', $_POST['commentaire_depense_'];
+echo '<br /> Etat soumettre: ', $_POST['soumettre'];
 
-            while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
-                echo '<br /><input type="radio" name="id_utilisateur_acheteur_depense" value="',$utilisateur['ID'], '"/> ',$utilisateur['Prenom'], ' ', $utilisateur['Nom'];
-            }
-            ?>
 
-        <br />Participant :
-            <?php
-            $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
+$preparation_requete_utilisateur= 'INSERT INTO y_utilisateurs (utilisateur_id, utilisateur_prenom, utilisateur_nom, utilisateur_pseudo, utilisateur_mail) VALUES (NULL, ?, ?, ?, ?)';
 
-            while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
-                echo '<br /><input type="checkbox" name="id_utilisateur_particpant_depense[]" value="',$utilisateur['ID'],'"/>', $utilisateur['Prenom'], ' ', $utilisateur['Nom'];
-            }
-            
-            ?>
-        <br />Date de la dépense : <input type="date" name="date_depense">
-        <br />Montant de la dépense: <input type="number" name="montant_depense">
+$requete_ajout_utilisateur = mysqli_prepare($connexion, $preparation_requete_utilisateur);
+// On indique que que la requete repare doit associe le "?" a la variable qui contient l'ID de la depense, et que c'est un type Décimal
+$ok = mysqli_stmt_bind_param($requete_ajout_utilisateur, 'ssss', $_POST['prenom_utilisateur'], $_POST['nom_utilisateur'], $_POST['pseudo_utilisateur'], $_POST['mail_utilisateur']);
+$ok = mysqli_stmt_execute($requete_ajout_utilisateur);
+$ok = mysqli_close($connexion);
+header('location: utilisateurs.php');
 
-        <br />Commentaire :<br />
-        <textarea name="commentaire_depense " rows="4" cols="50"></textarea>
-
-        <br />
-
-        <input type="submit" name="soumettre" value="OK" />
-        <input type="reset" name="effacer" value="Effacer" />
-    </div>
-</form>
-<form action="depenses.php">
-    <input type="submit" value="Retour aux Depenses">
-</form>
-</body>
-</html>
+?>

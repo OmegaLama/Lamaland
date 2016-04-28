@@ -72,7 +72,43 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
 }
 $ok = mysqli_close($connexion);
 ?>
+<h2>Ajouter Utilisateur</h2>
+<form action="fonctions.php" method="POST">
+    <div>
+        Nom de la dépense : <input type="text" name="nom_depense" size="20" maxlength="250" />
+        <br />Acheteur :
+        <?php
+        // Connexion et selection de la base
+        $requete_utilisateur = 'SELECT u.utilisateur_id \'ID\',  u.utilisateur_prenom \'Prenom\', u.utilisateur_nom \'Nom\', u.utilisateur_pseudo \'Pseudo\' 
+            FROM y_utilisateurs u';
+        $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
 
+        while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
+            echo '<br /><input type="radio" name="id_utilisateur_acheteur_depense" value="',$utilisateur['ID'], '"/> ',$utilisateur['Prenom'], ' ', $utilisateur['Nom'];
+        }
+        ?>
+
+        <br />Participant :
+        <?php
+        $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
+
+        while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
+            echo '<br /><input type="checkbox" name="id_utilisateur_particpant_depense[]" value="',$utilisateur['ID'],'"/>', $utilisateur['Prenom'], ' ', $utilisateur['Nom'];
+        }
+
+        ?>
+        <br />Date de la dépense : <input type="date" name="date_depense">
+        <br />Montant de la dépense: <input type="number" name="montant_depense">
+
+        <br />Commentaire :<br />
+        <textarea name="commentaire_depense " rows="4" cols="50"></textarea>
+
+        <br />
+
+        <input type="submit" name="soumettre" value="OK" />
+        <input type="reset" name="effacer" value="Effacer" />
+    </div>
+</form>
 <form action="ajouter_depense.php">
     <input type="submit" value="Ajouter une depense">
 </form>
