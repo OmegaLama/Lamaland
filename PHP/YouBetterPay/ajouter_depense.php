@@ -6,9 +6,11 @@
     <title>Ajout Dépense - You Better Pay</title>
 </head>
 <body>
+<?php include_once('menu.php'); ?>
+<h2>Ajouter Depense</h2>
 <form action="fonctions.php" method="POST">
     <div>
-        Nom de la dépense : <input type="text" name="saisie_nouvelle_depense[nom_depense]" size="20" maxlength="250" />
+        Nom de la dépense : <input type="text" name="nom_depense" size="20" maxlength="250" />
         <br />Acheteur :
             <?php
             // Connexion et selection de la base
@@ -18,7 +20,7 @@
             $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
 
             while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
-                echo '<br /><input type="checkbox" name="saisie_depense[id]" value="',$utilisateur['ID'], '"/> ',$utilisateur['Prenom'], ' ', $utilisateur['Nom'];
+                echo '<br /><input type="radio" name="id_utilisateur_acheteur_depense" value="',$utilisateur['ID'], '"/> ',$utilisateur['Prenom'], ' ', $utilisateur['Nom'];
             }
             ?>
 
@@ -27,13 +29,14 @@
             $utilisateurs = mysqli_query($connexion,$requete_utilisateur);
 
             while ($utilisateur = mysqli_fetch_assoc($utilisateurs)) {
-                echo '<br /><input type="checkbox" name="saisie_depense[id]" value="',$utilisateur['ID'],'"/>', $utilisateur['Prenom'], ' ', $utilisateur['Nom'];
+                echo '<br /><input type="checkbox" name="id_utilisateur_particpant_depense[]" value="',$utilisateur['ID'],'"/>', $utilisateur['Prenom'], ' ', $utilisateur['Nom'];
             }
             ?>
-        <br />Date de la dépense : <input type="date" name="saisie_depense[date]">
+        <br />Date de la dépense : <input type="date" name="date_depense">
+        <br />Montant de la dépense: <input type="number" name="montant_depense">
 
         <br />Commentaire :<br />
-        <textarea name="saisie_depense[commentaire]" rows="4" cols="50"></textarea>
+        <textarea name="commentaire_depense " rows="4" cols="50"></textarea>
 
         <br />
 

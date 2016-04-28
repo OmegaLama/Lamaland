@@ -5,7 +5,6 @@
     <title>Home - Youbetterpay</title>
 </head>
 <body>
-<h1>You Better Pay</h1>
 <?php
     include('menu.php');
 ?>
