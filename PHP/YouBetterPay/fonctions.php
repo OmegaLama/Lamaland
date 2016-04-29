@@ -12,5 +12,4 @@ echo '<br /> Date depense: ', $_POST['date_depense'];
 echo '<br /> Commentaire depense: ', $_POST['commentaire_depense_'];
 echo '<br /> Etat soumettre: ', $_POST['soumettre'];
 
-
 ?>
