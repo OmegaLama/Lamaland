@@ -70,8 +70,10 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
     </ul>
     <?php
 }
+
 ?>
-<h2>Ajouter Utilisateur</h2>
+
+<h2>Ajouter Depense</h2>
 <form action="ajouter_depense.php" method="POST">
     Nom de la dépense: <input name="nom_nouvelle_depense" type="text"/>
     <br />Montant de la depense: <input name="montant_nouvelle_depense" />
@@ -85,19 +87,22 @@ FROM y_utilisateurs u';
     while ($utilisateur = mysqli_fetch_assoc($liste_utilisateur)) {
         echo '<br /><input type="radio" name="id_acheteur_nouvelle_depense" value="',$utilisateur['id'],'"/>', $utilisateur['prenom'], ' ', $utilisateur['nom'], ' ', $utilisateur['pseudo'];
     }
-    echo '<br /> Parcipant à la dépense: ';
-    echo '<br />';
+    echo '<br /><br/> Parcipent à la dépense: ';
     $requete_recuperer_utilisateur = 'SELECT u.utilisateur_id \'id\', u.utilisateur_prenom \'prenom\', u.utilisateur_nom \'nom\', u.utilisateur_pseudo \'pseudo\'
 FROM y_utilisateurs u';
     // On execute la requete avec les informations de connexion, et on stock le resultat dans $depenseS
     $liste_utilisateur = mysqli_query($connexion,$requete_recuperer_utilisateur);
     // On boucle sur la variable $depenseS avec une variable tmp $depense
     while ($utilisateur = mysqli_fetch_assoc($liste_utilisateur)) {
-        echo '<br /><input type="checkbox" name="id_utilisateur_ajout[]" value="',$utilisateur['id'],'"/>', $utilisateur['prenom'], ' ', $utilisateur['nom'], ' ', $utilisateur['pseudo'];
+        echo '<br /><input type="checkbox" name="id_participant_nouvelle_depense[]" value="',$utilisateur['id'],'"/>', $utilisateur['prenom'], ' ', $utilisateur['nom'], ' ', $utilisateur['pseudo'];
     }
+        $ok = mysqli_stmt_close($liste_utilisateur);
         $ok = mysqli_close($connexion);
     ?>
-    <br /><input type="submit" />
+    <br /><br />Date de la depense: <input type="date" name="date_nouvelle_depense" />
+    <br/>Commentaire:<br/><textarea name="commentaire_nouvelle_depense" rows="4" cols="50"></textarea>
+
+    <br /><br /><input type="submit" />
 </form>
 </body>
 </html>
