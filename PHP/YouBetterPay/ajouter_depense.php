@@ -2,6 +2,11 @@
 
 $mysqli = mysqli_connect('localhost', 'lama', 'lama', 'db_test');
 
+$s = '06/10/2011 19:00:02';
+$date = strtotime($_POST['date_nouvelle_depense']);
+$date = date('Y-m-d', $date);
+echo 'Date: ',$date;
+
 if (!$mysqli) {
     trigger_error('mysqli Connection failed! ' . htmlspecialchars(mysqli_connect_error()), E_USER_ERROR);
 }
@@ -13,7 +18,7 @@ if ($stmt === false) {
     trigger_error('Statement failed! ' . htmlspecialchars(mysqli_error($mysqli)), E_USER_ERROR);
 }
 
-$bind = mysqli_stmt_bind_param($stmt, "ssdis", $_POST['nom_nouvelle_depense'], $_POST['commentaire_nouvelle_depense'], $_POST['montant_nouvelle_depense'], $_POST['id_acheteur_nouvelle_depense'], $_POST['date_nouvelle_depense']);
+$bind = mysqli_stmt_bind_param($stmt, "ssdis", $_POST['nom_nouvelle_depense'], $_POST['commentaire_nouvelle_depense'], $_POST['montant_nouvelle_depense'], $_POST['id_acheteur_nouvelle_depense'], $date);
 
 if ($bind === false) {
     echo 'Erreur Bind';
@@ -27,7 +32,7 @@ if ($exec === false) {
     trigger_error('Statement execute failed! ' . htmlspecialchars(mysqli_stmt_error($stmt)), E_USER_ERROR);
 }
 
-printf ("New Record has id %d.\n", mysqli_insert_id($mysqli));
+echo '<br />ID nouveau record: ', mysqli_insert_id($mysqli);
 
 mysqli_stmt_close($stmt);
 

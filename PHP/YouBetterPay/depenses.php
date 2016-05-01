@@ -5,7 +5,6 @@
     <title>Depenses - Youbetterpay</title>
 </head>
 <body>
-// On inclu le menu
 <?php include_once('menu.php'); ?>
 <h2>Depenses</h2>
 <h3>Liste des depenses</h3>
@@ -96,10 +95,9 @@ FROM y_utilisateurs u';
     while ($utilisateur = mysqli_fetch_assoc($liste_utilisateur)) {
         echo '<br /><input type="checkbox" name="id_participant_nouvelle_depense[]" value="',$utilisateur['id'],'"/>', $utilisateur['prenom'], ' ', $utilisateur['nom'], ' ', $utilisateur['pseudo'];
     }
-        $ok = mysqli_stmt_close($liste_utilisateur);
         $ok = mysqli_close($connexion);
     ?>
-    <br /><br />Date de la depense: <input type="date" name="date_nouvelle_depense" />
+    <br /><br />Date de la depense: <input type="date" name="date_nouvelle_depense" placeholder="jj-mm-aaaa" pattern="\d{1,2}-\d{1,2}-\d{4}">
     <br/>Commentaire:<br/><textarea name="commentaire_nouvelle_depense" rows="4" cols="50"></textarea>
 
     <br /><br /><input type="submit" />
