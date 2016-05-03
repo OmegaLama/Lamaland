@@ -17,7 +17,7 @@ $requete_depenses = 'SELECT d.depense_id \'Depense ID\', d.depense_nom \'Nom Dep
 FROM y_depenses d 
 INNER JOIN y_utilisateurs u 
 ON d.depense_payeur_id = u.utilisateur_id 
-ORDER BY d.depense_date ASC ';
+ORDER BY d.depense_date DESC ';
 // On execute la requete avec les informations de connexion, et on stock le resultat dans $depenseS
 
 $depenses = mysqli_query($connexion,$requete_depenses);

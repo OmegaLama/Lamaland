@@ -29,18 +29,15 @@ try {
 } catch(Error $e) {
     echo 'Erreur pendant l\'execution de la requete: ', $e;
 }
-mysqli_stmt_close($stmt);
-?>
-<?php
-if (! $mysqli) {
-    exit('Echec de la connexion.');
-}
-echo 'Partie 2';
-    $sql = 'INSERT INTO y_jointure_depenses_utilisateurs(jdu_id_depense, jdu_id_utilisateur, jdu_part_utilisateur) VALUES (?,?,?)';
-    $requête = mysqli_prepare($mysqli, $sql);
 
+echo 'Partie 2';
+$sql = 'INSERT INTO y_jointure_depenses_utilisateurs(jdu_id_depense, jdu_id_utilisateur, jdu_part_utilisateur) VALUES (?,?,?)';
+$requête = mysqli_prepare($mysqli, $sql);
+
+$nb_participant = count($_POST['id_participant_nouvelle_depense']);
+echo '<br />Nombre participant', $nb_participant;
 foreach ($_POST['id_participant_nouvelle_depense'] as $participant) {
-    $part =$_POST['montant_nouvelle_depense'] / 5;
+    $part =$_POST['montant_nouvelle_depense'] / $nb_participant;
     echo '<br />(boucle)ID Participant: ', $participant;
     echo '<br />(boucle)Part du participant: ', $part;
 
@@ -52,4 +49,6 @@ foreach ($_POST['id_participant_nouvelle_depense'] as $participant) {
 }
 
 header('location: depenses.php');
+
+mysqli_stmt_close($stmt);
 ?>
