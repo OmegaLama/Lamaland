@@ -19,6 +19,7 @@ INNER JOIN y_utilisateurs u
 ON d.depense_payeur_id = u.utilisateur_id 
 ORDER BY d.depense_date ASC ';
 // On execute la requete avec les informations de connexion, et on stock le resultat dans $depenseS
+
 $depenses = mysqli_query($connexion,$requete_depenses);
 // On boucle sur la variable $depenseS avec une variable tmp $depense
 while ($depense = mysqli_fetch_assoc($depenses)) {
@@ -70,7 +71,7 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
     <?php
 }
 
-?>
+?>  
 
 <h2>Ajouter Depense</h2>
 <form action="ajouter_depense.php" method="POST">
