@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Sam 30 Avril 2016 à 17:16
+-- Généré le :  Jeu 05 Mai 2016 à 11:59
 -- Version du serveur :  5.5.47-MariaDB-1ubuntu0.14.04.1
 -- Version de PHP :  7.0.5-3+donate.sury.org~trusty+1
 
@@ -41,7 +41,8 @@ CREATE TABLE `y_depenses` (
 
 INSERT INTO `y_depenses` (`depense_id`, `depense_nom`, `depense_description`, `depense_prix`, `depense_payeur_id`, `depense_date`) VALUES
 (1, 'Contrat d\'entretiens chaudiere', 'Contrat annuel du contrat d\'entretiens de la chaudiere', 180, 2, '2016-04-25'),
-(2, 'Camping', 'Camping Download Festival', 20, 1, '2016-04-21');
+(2, 'Camping', 'Camping Download Festival', 20, 1, '2016-04-21'),
+(3, 'Cadeau Zekke', 'Figurine Deadpool', 90, 1, '2016-05-03');
 
 -- --------------------------------------------------------
 
@@ -63,10 +64,15 @@ CREATE TABLE `y_jointure_depenses_utilisateurs` (
 INSERT INTO `y_jointure_depenses_utilisateurs` (`jdu_id`, `jdu_id_depense`, `jdu_id_utilisateur`, `jdu_part_utilisateur`) VALUES
 (1, 1, 2, 36),
 (2, 1, 1, 36),
-(3, 2, 2, 20),
 (4, 1, 3, 36),
 (5, 1, 4, 36),
-(6, 1, 5, 36);
+(6, 1, 5, 36),
+(56, 2, 2, 20),
+(57, 3, 1, 18),
+(58, 3, 2, 18),
+(59, 3, 3, 18),
+(60, 3, 4, 18),
+(61, 3, 5, 18);
 
 -- --------------------------------------------------------
 
@@ -107,7 +113,8 @@ ALTER TABLE `y_depenses`
 -- Index pour la table `y_jointure_depenses_utilisateurs`
 --
 ALTER TABLE `y_jointure_depenses_utilisateurs`
-  ADD PRIMARY KEY (`jdu_id`);
+  ADD PRIMARY KEY (`jdu_id`),
+  ADD KEY `jdu_id_depense` (`jdu_id_depense`);
 
 --
 -- Index pour la table `y_utilisateurs`
@@ -124,12 +131,12 @@ ALTER TABLE `y_utilisateurs`
 -- AUTO_INCREMENT pour la table `y_depenses`
 --
 ALTER TABLE `y_depenses`
-  MODIFY `depense_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `depense_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `y_jointure_depenses_utilisateurs`
 --
 ALTER TABLE `y_jointure_depenses_utilisateurs`
-  MODIFY `jdu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `jdu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT pour la table `y_utilisateurs`
 --
