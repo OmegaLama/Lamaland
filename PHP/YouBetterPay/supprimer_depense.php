@@ -22,4 +22,3 @@ if (! $ok) { // erreur quelque part
     }
 }
 header('location: depenses.php');
-?>
