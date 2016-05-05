@@ -25,7 +25,12 @@ $depenses = mysqli_query($connexion,$requete_depenses);
 while ($depense = mysqli_fetch_assoc($depenses)) {
     ?>
     <ul>
-        <li>Depense: <?php echo $depense['Depense ID']; ?></li>
+        <li>Depense: <?php echo $depense['Depense ID']; ?>
+            <form action="supprimer_depense.php" method="POST">
+                <input type="hidden" name="id_suppression_depense" value="<?php echo $depense['Depense ID']?>"/>
+                <input type="image" name="image" src="supprimer.png" height="15" width="15"/>
+            </form>
+        </li>
         <ul>
             <li>Nom Depense: <?php echo $depense['Nom Depense']; ?></li>
             <li>Prix Depense: <?php echo $depense['Prix'],' €'; ?></li>
@@ -66,10 +71,6 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
                     </ul>
                 <?php } ?>
             </ul>
-            <form action="supprimer_depense.php" method="POST">
-                <input type="hidden" name="id_suppression_depense" value="<?php echo $depense['Depense ID']?>"/>
-                <input type="image" name="image" src="supprimer.png" height="15" width="15"/>
-            </form>
         </ul>
     </ul>
     <?php
