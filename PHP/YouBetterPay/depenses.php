@@ -66,6 +66,10 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
                     </ul>
                 <?php } ?>
             </ul>
+            <form action="supprimer_depense.php" method="POST">
+                <input type="hidden" name="id_suppression_depense" value="<?php echo $depense['Depense ID']?>"/>
+                <input type="image" name="image" src="supprimer.png" height="15" width="15"/>
+            </form>
         </ul>
     </ul>
     <?php

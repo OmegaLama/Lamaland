@@ -9,7 +9,7 @@ if (! $mysqli) {
 $date = strtotime($_POST['date_nouvelle_depense']);
 $date = date('Y-m-d', $date);
 echo 'Date de la depense: ',$date;
-echo '<br />Nom de la depense: ',$_POSR['nom_nouvelle_depense'];
+echo '<br />Nom de la depense: ',$_POST['nom_nouvelle_depense'];
 echo '<br />Montant de la depense: ', $_POST['montant_nouvelle_depense'];
 echo '<br />ID Acheteur: ', $_POST['id_acheteur_nouvelle_depense'];
 echo '<br />Description: ', $_POST['commentaire_nouvelle_depense'],'<br/>';
@@ -51,4 +51,3 @@ foreach ($_POST['id_participant_nouvelle_depense'] as $participant) {
 header('location: depenses.php');
 
 mysqli_stmt_close($stmt);
-?>
