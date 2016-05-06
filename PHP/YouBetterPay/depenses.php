@@ -81,7 +81,7 @@ while ($depense = mysqli_fetch_assoc($depenses)) {
 <h2>Ajouter Depense</h2>
 <form action="ajouter_depense.php" method="POST">
     Nom de la dépense: <input name="nom_nouvelle_depense" type="text"/>
-    <br />Montant de la depense: <input name="montant_nouvelle_depense" />
+    <br />Montant de la depense: <input type="number" name="montant_nouvelle_depense" min="0"/>
     <br />Payeur:
     <?php
     $requete_recuperer_utilisateur = 'SELECT u.utilisateur_id \'id\', u.utilisateur_prenom \'prenom\', u.utilisateur_nom \'nom\', u.utilisateur_pseudo \'pseudo\'
@@ -100,6 +100,7 @@ FROM y_utilisateurs u';
     // On boucle sur la variable $depenseS avec une variable tmp $depense
     while ($utilisateur = mysqli_fetch_assoc($liste_utilisateur)) {
         echo '<br /><input type="checkbox" name="id_participant_nouvelle_depense[]" value="',$utilisateur['id'],'"/>', $utilisateur['prenom'], ' ', $utilisateur['nom'], ' ', $utilisateur['pseudo'];
+        echo '<br />Montant: <input type="number" name="montant_participant_nouvelle_depense[]" min="0"/>';
     }
         $ok = mysqli_close($connexion);
     ?>

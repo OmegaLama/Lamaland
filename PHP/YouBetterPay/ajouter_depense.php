@@ -48,6 +48,6 @@ foreach ($_POST['id_participant_nouvelle_depense'] as $participant) {
     echo '<br/>Erreur SQL Y_JOINTURE: \'',mysqli_stmt_errno($requête),' - ', mysqli_stmt_error($requête),'<br />';
 }
 
-header('location: depenses.php');
+//header('location: depenses.php');
 
 mysqli_stmt_close($stmt);
