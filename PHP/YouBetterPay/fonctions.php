@@ -37,7 +37,6 @@ function lister_infos_depense($id) {
 // Liaison des colonnes du résultat.
     $ok = mysqli_stmt_bind_result($requête,$utilisateur_id, $utilisateur_prenom, $utilisateur_nom, $utilisateur_pseudo, $utilisateur_part);
 // Exécution de la requête.
-    $prix_max = 35;
     $ok = mysqli_stmt_execute($requête);
     $ok = mysqli_stmt_store_result($requête);
 
