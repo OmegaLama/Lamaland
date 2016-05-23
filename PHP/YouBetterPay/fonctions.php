@@ -227,7 +227,8 @@ function lister_dossier() {
     $connexion = connexion_sql();
 
     // Préparation de la requête.
-    $sql = 'SELECT dossier_id, dossier_nom, dossier_actif, dossier_date_debut, dossier_date_fin, dossier_description FROM y_dossiers WHERE dossier_actif LIKE TRUE';
+    $sql = 'SELECT dossier_id, dossier_nom, dossier_actif, dossier_date_debut, dossier_date_fin, dossier_description FROM y_dossiers';
+
     $liste_dossier = mysqli_query($connexion, $sql);
 
     while ($dossier = mysqli_fetch_assoc($liste_dossier)) {
@@ -251,10 +252,29 @@ function lister_dossier() {
 function affichage_tableau_rapport()
 {
     $connexion = connexion_sql();
-    $requete_dossiers_actif = 'SELECT dossier_id, dossier_nom, dossier_date_debut, dossier_date_fin, dossier_description FROM y_dossiers WHERE dossier_actif LIKE TRUE';
+    $requete_dossiers_actif = 'SELECT dossier_id, dossier_nom, dossier_date_debut, dossier_date_fin, dossier_description FROM y_dossiers WHERE dossier_actif LIKE FALSE';
     $liste_dossier_actif = mysqli_query($connexion, $requete_dossiers_actif);
     while ($dossier = mysqli_fetch_assoc($liste_dossier_actif)) {
         $dossier_id = $dossier['dossier_id'];
+        echo 'Numero dossier: ', $dossier_id;
+        // Préparation de la requête.
+        $requete_liste_depense_dossier = 'SELECT depense_id, depense_nom, depense_description, depense_prix, depense_payeur_id, depense_date
+                                                        FROM `y_depenses` 
+                                                        WHERE `depense_dossier_id` = ?';
+        $liste_depense_dossier = mysqli_prepare($connexion, $requete_liste_depense_dossier);
+        // Liaison des paramètres.
+        $ok = mysqli_stmt_bind_param($liste_depense_dossier,'i',$dossier_id);
+        // Liaison des colonnes du résultat.
+        $ok = mysqli_stmt_bind_result($liste_depense_dossier,$depense_id, $depense_nom, $depense_description, $depense_prix, $depense_payeur_id, $depense_date);
+        // Exécution de la requête.
+        $ok = mysqli_stmt_execute($liste_depense_dossier);
+        // On stock le resulat.
+        $ok = mysqli_stmt_store_result($liste_depense_dossier);
+        $montant_total = 0;
+        while (mysqli_stmt_fetch($liste_depense_dossier)) {
+            $montant_total += $depense_prix;
+        }
+        $tableau_acheteur = array();
         echo '
             <ul>
                 <li>Numero Dossier #', $dossier['dossier_id'],'</li>
@@ -267,50 +287,32 @@ function affichage_tableau_rapport()
                         <li>Description Dossier: ', $dossier['dossier_description'],'</li>
                     </ul>
                     <li>Détails des dépenses</li>
-                    <ul>';
-                        // Préparation de la requête.
-                        $requete_liste_depense_dossier = 'SELECT depense_id, depense_nom, depense_description, depense_prix, depense_payeur_id, depense_date
-                                                        FROM `y_depenses` 
-                                                        WHERE `depense_dossier_id` = ?';
-                        $liste_depense_dossier = mysqli_prepare($connexion, $requete_liste_depense_dossier);
-                        // Liaison des paramètres.
-                        $ok = mysqli_stmt_bind_param($liste_depense_dossier,'i',$dossier_id);
-                        // Liaison des colonnes du résultat.
-                        $ok = mysqli_stmt_bind_result($liste_depense_dossier,$depense_id, $depense_nom, $depense_description, $depense_prix, $depense_payeur_id, $depense_date);
-                        // Exécution de la requête.
-                        $ok = mysqli_stmt_execute($liste_depense_dossier);
-                        // On stock le resulat.
-                        $ok = mysqli_stmt_store_result($liste_depense_dossier);
-                        $montant_total = 0;
-                        while (mysqli_stmt_fetch($liste_depense_dossier)) {
-                            $montant_total += $depense_prix;
-                        }
-                        $tableau_acheteur = array();
-        // Lecture du résultat.
-                        echo '
-                            <ul>
-                                <li> Nombre de depenses associés au dossier: ',mysqli_stmt_num_rows($liste_depense_dossier),'</li>
-                            </ul>
-                        </ul>
-                        <li>Liste des virements</li>
-                        <ul>
-                            <li>Montant total des depenses: ', $montant_total,'€</li>
-                            <ul>';
-                                $ok = mysqli_stmt_execute($liste_depense_dossier);
-                                $ok = mysqli_stmt_store_result($liste_depense_dossier);
-                                while (mysqli_stmt_fetch($liste_depense_dossier)) {
-                                    echo '<br>Boucle insertion: Payeur ID: ', $depense_payeur_id, 'Depense prix: ',$depense_prix;
-                                    array_push($tableau_acheteur, $depense_payeur_id);
-                                }
-                            echo '</ul>
-                        </ul>
+                    <ul>
+                        <li> Nombre de depenses associés au dossier: ',mysqli_stmt_num_rows($liste_depense_dossier),'</li>
                     </ul>
+                    <li>Liste des virements</li>
+                    <ul>
+                        <li>Montant total des depenses: ', $montant_total,'€</li>
+                        <ul>';
+                        $ok = mysqli_stmt_execute($liste_depense_dossier);
+                        $ok = mysqli_stmt_store_result($liste_depense_dossier);
+                        while (mysqli_stmt_fetch($liste_depense_dossier)) {
+                            echo '<br>Boucle insertion: Payeur ID: ', $depense_payeur_id, 'Depense prix: ',$depense_prix;
+                            $tableau_acheteur[$depense_payeur_id] = $depense_prix;
+                            }
+        echo '          </ul>
+                    </ul>
+                </ul>
             </ul>
         ';
-        foreach ($tableau_acheteur as $indice => $payeur) {
-            echo '<br>TEST :', $payeur;
+        asort($tableau_acheteur);
+        foreach ($tableau_acheteur as $id_payeur => $montant_depense) {
+            echo '<br/>Payeur ID: ',$id_payeur,' - Montant depense: ', $montant_depense;
+            $id_crediteur_primaire = $id_payeur;
         }
-        // Déconnexion.
-        $ok = mysqli_close($connexion);
+        echo '<br>ID plus gros payeur: ',$id_crediteur_primaire;
+
     }
+    // Déconnexion.
+    $ok = mysqli_close($connexion);
 }
